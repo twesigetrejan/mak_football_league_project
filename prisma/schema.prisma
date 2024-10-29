@@ -1,14 +1,163 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = "mysql://root:@Infinity11@localhost:3306/mak_football_league"
+}
+
+model fields {
+  field_id        Int       @id @default(autoincrement())
+  field_name      String    @db.VarChar(100)
+  location        String?   @db.VarChar(100)
+  capacity        Int?
+  field_photo_url String?   @db.VarChar(255)
+  created_at      DateTime? @default(now()) @db.Timestamp(0)
+  games           games[]
+}
+
+model game_statistics {
+  game_stat_id          Int       @id @default(autoincrement())
+  game_id               Int?
+  team_id               Int?
+  total_shots           Int?
+  fouls_committed       Int?
+  yellow_cards          Int?
+  red_cards             Int?
+  corners_won           Int?
+  offsides_committed    Int?
+  possession_percentage Decimal?  @db.Decimal(5, 2)
+  created_at            DateTime? @default(now()) @db.Timestamp(0)
+  games                 games?    @relation(fields: [game_id], references: [game_id], onDelete: NoAction, onUpdate: NoAction, map: "game_statistics_ibfk_1")
+  teams                 teams?    @relation(fields: [team_id], references: [team_id], onDelete: NoAction, onUpdate: NoAction, map: "game_statistics_ibfk_2")
+
+  @@index([game_id], map: "game_id")
+  @@index([team_id], map: "team_id")
+}
+
+model games {
+  game_id                         Int                 @id @default(autoincrement())
+  season_id                       Int?
+  home_team_id                    Int?
+  away_team_id                    Int?
+  game_date                       DateTime?           @db.Date
+  field_id                        Int?
+  referee_id                      Int?
+  result                          String?             @db.VarChar(100)
+  created_at                      DateTime?           @default(now()) @db.Timestamp(0)
+  game_statistics                 game_statistics[]
+  seasons                         seasons?            @relation(fields: [season_id], references: [season_id], onDelete: NoAction, onUpdate: NoAction, map: "games_ibfk_1")
+  teams_games_home_team_idToteams teams?              @relation("games_home_team_idToteams", fields: [home_team_id], references: [team_id], onDelete: NoAction, onUpdate: NoAction, map: "games_ibfk_2")
+  teams_games_away_team_idToteams teams?              @relation("games_away_team_idToteams", fields: [away_team_id], references: [team_id], onDelete: NoAction, onUpdate: NoAction, map: "games_ibfk_3")
+  fields                          fields?             @relation(fields: [field_id], references: [field_id], onDelete: NoAction, onUpdate: NoAction, map: "games_ibfk_4")
+  referees                        referees?           @relation(fields: [referee_id], references: [referee_id], onDelete: NoAction, onUpdate: NoAction, map: "games_ibfk_5")
+  player_statistics               player_statistics[]
+
+  @@index([away_team_id], map: "away_team_id")
+  @@index([field_id], map: "field_id")
+  @@index([home_team_id], map: "home_team_id")
+  @@index([referee_id], map: "referee_id")
+  @@index([season_id], map: "season_id")
+}
+
+model managers {
+  manager_id        Int       @id @default(autoincrement())
+  first_name        String    @db.VarChar(100)
+  last_name         String    @db.VarChar(100)
+  nationality       String?   @db.VarChar(50)
+  manager_url_photo String?   @db.VarChar(255)
+  created_at        DateTime? @default(now()) @db.Timestamp(0)
+  teams             teams?
+}
+
+model player_statistics {
+  player_stat_id  Int       @id @default(autoincrement())
+  player_id       Int?
+  game_id         Int?
+  goals_scored    Int?
+  assists         Int?
+  minutes_played  Int?
+  yellow_cards    Int?
+  red_cards       Int?
+  shots_on_target Int?
+  created_at      DateTime? @default(now()) @db.Timestamp(0)
+  players         players?  @relation(fields: [player_id], references: [player_id], onDelete: NoAction, onUpdate: NoAction, map: "player_statistics_ibfk_1")
+  games           games?    @relation(fields: [game_id], references: [game_id], onDelete: NoAction, onUpdate: NoAction, map: "player_statistics_ibfk_2")
+
+  @@index([game_id], map: "game_id")
+  @@index([player_id], map: "player_id")
+}
+
+model players {
+  player_id         Int                 @id @default(autoincrement())
+  team_id           Int?
+  player_name       String              @db.VarChar(100)
+  position          String?             @db.VarChar(50)
+  jersey_number     Int?
+  course            String?             @db.VarChar(100)
+  height            Decimal?            @db.Decimal(5, 2)
+  weight            Decimal?            @db.Decimal(5, 2)
+  joined_date       DateTime?           @db.Date
+  player_photo_url  String?             @db.VarChar(255)
+  created_at        DateTime?           @default(now()) @db.Timestamp(0)
+  player_statistics player_statistics[]
+  teams             teams?              @relation(fields: [team_id], references: [team_id], onDelete: NoAction, onUpdate: NoAction, map: "players_ibfk_1")
+
+  @@index([team_id], map: "team_id")
+}
+
+model referees {
+  referee_id          Int       @id @default(autoincrement())
+  referee_name        String    @db.VarChar(100)
+  nationality         String?   @db.VarChar(50)
+  years_of_experience Int?
+  referee_photo_url   String?   @db.VarChar(255)
+  created_at          DateTime? @default(now()) @db.Timestamp(0)
+  games               games[]
+}
+
+model seasons {
+  season_id   Int         @id @default(autoincrement())
+  season_name String      @db.VarChar(100)
+  start_date  DateTime?   @db.Date
+  end_date    DateTime?   @db.Date
+  created_at  DateTime?   @default(now()) @db.Timestamp(0)
+  games       games[]
+  standings   standings[]
+}
+
+model standings {
+  standings_id    Int       @id @default(autoincrement())
+  season_id       Int?
+  team_id         Int?
+  games_played    Int?
+  games_won       Int?
+  games_drawn     Int?
+  games_lost      Int?
+  goals_for       Int?
+  goals_against   Int?
+  goal_difference Int?
+  points          Int?
+  created_at      DateTime? @default(now()) @db.Timestamp(0)
+  seasons         seasons?  @relation(fields: [season_id], references: [season_id], onDelete: NoAction, onUpdate: NoAction, map: "standings_ibfk_1")
+  teams           teams?    @relation(fields: [team_id], references: [team_id], onDelete: NoAction, onUpdate: NoAction, map: "standings_ibfk_2")
+
+  @@index([season_id], map: "season_id")
+  @@index([team_id], map: "team_id")
+}
+
+model teams {
+  team_id                         Int               @id @default(autoincrement())
+  team_name                       String            @db.VarChar(100)
+  stadium_name                    String?           @db.VarChar(100)
+  manager_id                      Int?              @unique(map: "manager_id")
+  team_founded                    DateTime?         @db.Date
+  created_at                      DateTime?         @default(now()) @db.Timestamp(0)
+  game_statistics                 game_statistics[]
+  games_games_home_team_idToteams games[]           @relation("games_home_team_idToteams")
+  games_games_away_team_idToteams games[]           @relation("games_away_team_idToteams")
+  players                         players[]
+  standings                       standings[]
+  managers                        managers?         @relation(fields: [manager_id], references: [manager_id], onDelete: NoAction, onUpdate: NoAction, map: "teams_ibfk_1")
 }
