@@ -1,4 +1,5 @@
 "use client";
+import Navbar from '@/components/navbar';
 import { useEffect, useState } from 'react';
 
 interface Team {
@@ -9,7 +10,6 @@ interface Team {
 
 const TeamsPage = () => {
   const [teams, setTeams] = useState<Team[]>([]);
-
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -32,6 +32,9 @@ const TeamsPage = () => {
 
   return (
     <div>
+      <div className="">
+        <Navbar />
+      </div>
       <h1>Football Teams</h1>
       <ul>
         {teams && teams.map((team) => (
