@@ -1,0 +1,204 @@
+
+CREATE DATABASE IF NOT EXISTS MAK_Football_League;
+USE MAK_Football_League;
+
+-- Managers table
+CREATE TABLE managers (
+    manager_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    nationality VARCHAR(50),
+    manager_url_photo VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Teams table
+CREATE TABLE teams (
+    team_id INT PRIMARY KEY AUTO_INCREMENT,
+    team_name VARCHAR(100) NOT NULL,
+    stadium_name VARCHAR(100),
+    manager_id INT UNIQUE, -- Ensure each manager is linked to one team
+    team_founded DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (manager_id) REFERENCES managers(manager_id)
+);
+
+-- Fields table
+CREATE TABLE fields (
+    field_id INT PRIMARY KEY AUTO_INCREMENT,
+    field_name VARCHAR(100) NOT NULL,
+    location VARCHAR(100),
+    capacity INT,
+    field_photo_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Players table
+CREATE TABLE players (
+    player_id INT PRIMARY KEY AUTO_INCREMENT,
+    team_id INT,
+    player_name VARCHAR(100) NOT NULL,
+    position VARCHAR(50),
+    jersey_number INT,
+    course VARCHAR(100),
+    height DECIMAL(5,2),
+    weight DECIMAL(5,2),
+    joined_date DATE,
+    player_photo_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (team_id) REFERENCES teams(team_id)
+);
+
+-- Referees table
+CREATE TABLE referees (
+    referee_id INT PRIMARY KEY AUTO_INCREMENT,
+    referee_name VARCHAR(100) NOT NULL,
+    nationality VARCHAR(50),
+    years_of_experience INT,
+    referee_photo_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Seasons table
+CREATE TABLE seasons (
+    season_id INT PRIMARY KEY AUTO_INCREMENT,
+    season_name VARCHAR(100) NOT NULL,
+    start_date DATE,
+    end_date DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Games table
+CREATE TABLE games (
+    game_id INT PRIMARY KEY AUTO_INCREMENT,
+    season_id INT,
+    home_team_id INT,
+    away_team_id INT,
+    game_date DATE,
+    field_id INT,
+    referee_id INT,
+    result VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (season_id) REFERENCES seasons(season_id),
+    FOREIGN KEY (home_team_id) REFERENCES teams(team_id),
+    FOREIGN KEY (away_team_id) REFERENCES teams(team_id),
+    FOREIGN KEY (field_id) REFERENCES fields(field_id),
+    FOREIGN KEY (referee_id) REFERENCES referees(referee_id)
+);
+
+-- Game statistics table
+CREATE TABLE game_statistics (
+    game_stat_id INT PRIMARY KEY AUTO_INCREMENT,
+    game_id INT,
+    team_id INT,
+    total_shots INT,
+    fouls_committed INT,
+    yellow_cards INT,
+    red_cards INT,
+    corners_won INT,
+    offsides_committed INT,
+    possession_percentage DECIMAL(5,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (game_id) REFERENCES games(game_id),
+    FOREIGN KEY (team_id) REFERENCES teams(team_id)
+);
+
+-- Player statistics table
+CREATE TABLE player_statistics (
+    player_stat_id INT PRIMARY KEY AUTO_INCREMENT,
+    player_id INT,
+    game_id INT,
+    goals_scored INT,
+    assists INT,
+    minutes_played INT,
+    yellow_cards INT,
+    red_cards INT,
+    shots_on_target INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (player_id) REFERENCES players(player_id),
+    FOREIGN KEY (game_id) REFERENCES games(game_id)
+);
+
+-- Standings table
+CREATE TABLE standings (
+    standings_id INT PRIMARY KEY AUTO_INCREMENT,
+    season_id INT,
+    team_id INT,
+    games_played INT,
+    games_won INT,
+    games_drawn INT,
+    games_lost INT,
+    goals_for INT,
+    goals_against INT,
+    goal_difference INT GENERATED ALWAYS AS (goals_for - goals_against) STORED,
+    points INT GENERATED ALWAYS AS (games_won * 3 + games_drawn) STORED,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (season_id) REFERENCES seasons(season_id),
+    FOREIGN KEY (team_id) REFERENCES teams(team_id)
+);
+
+-- Sample data for managers
+INSERT INTO managers (first_name, last_name, nationality, manager_url_photo) 
+VALUES 
+('John', 'Doe', 'Ugandan', 'https://example.com/manager1.jpg'),
+('Jane', 'Smith', 'Kenyan', 'https://example.com/manager2.jpg'),
+('Robert', 'Kibera', 'Ugandan', 'https://example.com/manager3.jpg'),
+('Jessica', 'Wanjiru', 'Kenyan', 'https://example.com/manager4.jpg'),
+('Michael', 'Kamara', 'Tanzanian', 'https://example.com/manager5.jpg'),
+('Linda', 'Akinyi', 'Ugandan', 'https://example.com/manager6.jpg'),
+('David', 'Lugoloobi', 'Ugandan', 'https://example.com/manager7.jpg');
+
+-- Sample data for teams
+INSERT INTO teams (team_name, stadium_name, manager_id, team_founded) 
+VALUES 
+('Kampala FC', 'Mandela National Stadium', 1, '1998-05-12'),
+('Nairobi Stars', 'Kasarani Stadium', 2, '2003-08-23'),
+('Kibuli United', 'Kibuli Stadium', 3, '1996-09-01'),
+('Thika United', 'Thika Stadium', 4, '1997-10-12'),
+('Mwanza FC', 'Mwanza Stadium', 5, '2002-12-15'),
+('Kisumu Stars', 'Kisumu Stadium', 6, '2004-05-05'),
+('Arua Hill SC', 'Arua Stadium', 7, '2008-06-22');
+
+-- Sample data for fields
+INSERT INTO fields (field_name, location, capacity, field_photo_url) 
+VALUES 
+('Mandela National Stadium', 'Kampala', 40000, 'https://example.com/mandela.jpg'),
+('Kasarani Stadium', 'Nairobi', 60000, 'https://example.com/kasarani.jpg'),
+('Kibuli Stadium', 'Kibuli', 28000, 'https://example.com/kibuli.jpg'),
+('Thika Stadium', 'Thika', 35000, 'https://example.com/thika.jpg'),
+('Mwanza Stadium', 'Mwanza', 30000, 'https://example.com/mwanza.jpg'),
+('Kisumu Stadium', 'Kisumu', 25000, 'https://example.com/kisumu.jpg'),
+('Arua Stadium', 'Arua', 22000, 'https://example.com/arua.jpg');
+
+-- Sample data for referees
+INSERT INTO referees (referee_name, nationality, years_of_experience, referee_photo_url) 
+VALUES 
+('Paul Nabimanya', 'Ugandan', 5, 'https://example.com/referee1.jpg'),
+('Grace Mwangi', 'Kenyan', 8, 'https://example.com/referee2.jpg'),
+('Daniel Ntege', 'Ugandan', 6, 'https://example.com/referee3.jpg');
+
+-- Sample data for seasons
+INSERT INTO seasons (season_name, start_date, end_date) 
+VALUES 
+('2023/2024 Season', '2023-09-01', '2024-05-30'), 
+('2024/2025 Season', '2024-09-01', '2025-05-30');
+
+-- Sample data for games
+INSERT INTO games (season_id, home_team_id, away_team_id, game_date, field_id, referee_id, result) 
+VALUES 
+(1, 1, 2, '2023-09-15', 1, 1, '2-1'),
+(1, 3, 4, '2023-09-16', 2, 2, '1-0'),
+(1, 5, 6, '2023-09-17', 3, 3, '3-1'),
+(1, 7, 1, '2023-09-18', 4, 1, '0-0'),
+(1, 2, 3, '2023-09-19', 5, 2, '1-3');
+
+-- Sample data for standings (corrected to calculate goal difference and points automatically)
+INSERT INTO standings (season_id, team_id, games_played, games_won, games_drawn, games_lost, goals_for, goals_against) 
+VALUES 
+(1, 1, 5, 3, 1, 1, 10, 5), -- Kampala FC
+(1, 2, 5, 1, 2, 2, 5, 8), -- Nairobi Stars
+(1, 3, 5, 4, 1, 0, 12, 4), -- Kibuli United
+(1, 4, 5, 1, 0, 4, 4, 14), -- Thika United
+(1, 5, 5, 2, 2, 1, 9, 6), -- Mwanza FC
+(1, 6, 5, 0, 0, 5, 2, 15), -- Kisumu Stars
+(1, 7, 5, 2, 1, 2, 7, 6); -- Arua Hill SC
