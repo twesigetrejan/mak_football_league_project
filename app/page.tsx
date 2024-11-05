@@ -45,7 +45,7 @@ const TeamsPage = () => {
         Mak Football League Standings
       </h1>
 
-      <Table className="text-[16px]">
+      <Table className="text-[18x]">
         <TableCaption>Standings as of October</TableCaption>
         <TableHeader>
           <TableRow>
