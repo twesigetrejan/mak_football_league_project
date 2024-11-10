@@ -45,7 +45,7 @@ const TeamsPage = () => {
         Mak Football League Standings
       </h1>
 
-      <Table className="text-[18x]">
+      <Table className="text-[18px]">
         <TableCaption>Standings as of October</TableCaption>
         <TableHeader>
           <TableRow>
@@ -63,7 +63,7 @@ const TeamsPage = () => {
         </TableHeader>
         <TableBody>
           {[
-            { position: 1, name: "Computer Science Literals", mp: 4, w: 3, d: 1, l: 0, gf: 7, ga: 3, gd: 4, pts: 10 },
+            { position: 1, name: "CSE Literals", mp: 4, w: 3, d: 1, l: 0, gf: 7, ga: 3, gd: 4, pts: 10 },
             { position: 2, name: "Mechanical Marvels", mp: 4, w: 3, d: 0, l: 1, gf: 6, ga: 2, gd: 4, pts: 9 },
             { position: 3, name: "Law Legends", mp: 4, w: 2, d: 1, l: 1, gf: 5, ga: 3, gd: 2, pts: 7 },
             { position: 4, name: "Engineering Eagles", mp: 4, w: 2, d: 1, l: 1, gf: 4, ga: 3, gd: 1, pts: 7 },
