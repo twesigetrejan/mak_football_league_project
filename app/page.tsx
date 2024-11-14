@@ -72,7 +72,7 @@ const TeamsPage = () => {
             { position: 7, name: "Arts Avengers", mp: 4, w: 1, d: 1, l: 2, gf: 2, ga: 5, gd: -3, pts: 4 },
             { position: 8, name: "Medicine Masters", mp: 4, w: 1, d: 0, l: 3, gf: 3, ga: 7, gd: -4, pts: 3 },
             { position: 9, name: "Agriculture Aces", mp: 4, w: 0, d: 1, l: 3, gf: 2, ga: 6, gd: -4, pts: 1 },
-            { position: 10, name: "Education Elephants", mp: 4, w: 0, d: 1, l: 3, gf: 1, ga: 7, gd: -6, pts: 1 },
+            { position: 10, name: "Education Elves", mp: 4, w: 0, d: 1, l: 3, gf: 1, ga: 7, gd: -6, pts: 1 },
           ].map((team) => (
             <TableRow key={team.position}>
               <TableCell className="font-medium">{team.position}</TableCell>
