@@ -93,7 +93,7 @@ const TeamsPage = () => {
         <h2 className="p-2">
           Keys
         </h2>
-        <div className=" gap-10 grid grid-cols-4 bg-gray-200 m-2 text-center w-[600px]">
+        <div className=" gap-10 grid grid-cols-4 bg-gray-200 m-2 text-center w-[605px]">
 
           <p className="">MP- Matches Played</p>
           <p className="">W- Wins</p>
