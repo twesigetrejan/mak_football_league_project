@@ -90,7 +90,7 @@ const TeamsPage = () => {
         </TableBody>
       </Table>
       <div className="flex flex-col">
-        <h2 className="p-3">
+        <h2 className="p-2">
           Keys
         </h2>
         <div className=" gap-10 grid grid-cols-4 bg-gray-200 m-2 text-center w-[600px]">
