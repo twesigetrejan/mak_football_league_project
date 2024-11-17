@@ -24,7 +24,7 @@ const TeamsPage = () => {
       try {
         const response = await fetch('/api/teams');
         if (!response.ok) {
-          throw new Error('Failed to fetch teams');
+          throw new Error('Failed to fetch teams from database, try again');
         }
         const data = await response.json();
         setTeams(data);
@@ -41,7 +41,7 @@ const TeamsPage = () => {
       <div className="">
         <Navbar />
       </div>
-      <h1 className='text-center text-green-500 font-semibold p-2 text-lg'>
+      <h1 className='text-center text-green-500 font-semibold p-3 text-lg'>
         Mak Football League Standings
       </h1>
 
