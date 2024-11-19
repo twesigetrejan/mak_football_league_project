@@ -101,7 +101,7 @@ const TeamsPage = () => {
           <p className="">L- Loses</p>
           <p className="">GD- Goal Difference</p>
           <p className="">Pts- Points earned</p>
-          <p className="">GF- Goals For</p>
+          <p className="">GF- Goals scoredr</p>
           <p className="">GA- Goals Against</p>
 
         </div>
