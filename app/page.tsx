@@ -24,7 +24,7 @@ const TeamsPage = () => {
       try {
         const response = await fetch('/api/teams');
         if (!response.ok) {
-          throw new Error('Failed to fetch teams from database, try again');
+          throw new Error('Error :Failed to fetch teams from database');
         }
         const data = await response.json();
         setTeams(data);
@@ -93,7 +93,7 @@ const TeamsPage = () => {
         <h2 className="p-2">
           Keys
         </h2>
-        <div className=" gap-10 grid grid-cols-4 bg-gray-200 m-2 text-center w-[600px]">
+        <div className=" gap-10 grid grid-cols-4 bg-gray-300 m-2 text-center w-[600px]">
 
           <p className="">MP- Matches Played</p>
           <p className="">W- Wins</p>
