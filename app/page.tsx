@@ -64,7 +64,7 @@ const TeamsPage = () => {
         <TableBody>
           {[
             { position: 1, name: "CSE Literals", mp: 4, w: 3, d: 1, l: 0, gf: 7, ga: 3, gd: 4, pts: 10 },
-            { position: 2, name: "Mechanical Marvels", mp: 4, w: 3, d: 0, l: 1, gf: 6, ga: 2, gd: 4, pts: 9 },
+            { position: 2, name: "Mechanical ", mp: 4, w: 3, d: 0, l: 1, gf: 6, ga: 2, gd: 4, pts: 9 },
             { position: 3, name: "Law Legends", mp: 4, w: 2, d: 1, l: 1, gf: 5, ga: 3, gd: 2, pts: 7 },
             { position: 4, name: "Engineering Eaglets", mp: 4, w: 2, d: 1, l: 1, gf: 4, ga: 3, gd: 1, pts: 7 },
             { position: 5, name: "Science Scholars", mp: 4, w: 2, d: 0, l: 2, gf: 5, ga: 5, gd: 0, pts: 6 },
