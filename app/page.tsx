@@ -46,7 +46,7 @@ const TeamsPage = () => {
       </h1>
 
       <Table className="text-[18px]">
-        <TableCaption>Standings as of November</TableCaption>
+        <TableCaption>Standings as of November 20</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Position</TableHead>
