@@ -42,7 +42,7 @@ const TeamsPage = () => {
         <Navbar />
       </div>
       <h1 className='text-center text-green-500 font-semibold p-3 text-lg'>
-        Mak Football League Standings
+        Mak League Standings
       </h1>
 
       <Table className="text-[18px]">
