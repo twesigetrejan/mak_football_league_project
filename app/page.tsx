@@ -70,7 +70,7 @@ const TeamsPage = () => {
             { position: 5, name: "Science Scholars", mp: 4, w: 2, d: 0, l: 2, gf: 5, ga: 5, gd: 0, pts: 6 },
             { position: 6, name: "Business Buffs", mp: 4, w: 1, d: 1, l: 2, gf: 3, ga: 4, gd: -1, pts: 4 },
             { position: 7, name: "Arts Avengers", mp: 4, w: 1, d: 1, l: 2, gf: 2, ga: 5, gd: -3, pts: 4 },
-            { position: 8, name: "Medicine Masters", mp: 4, w: 1, d: 0, l: 3, gf: 3, ga: 7, gd: -4, pts: 3 },
+            { position: 8, name: "Medicals", mp: 4, w: 1, d: 0, l: 3, gf: 3, ga: 7, gd: -4, pts: 3 },
             { position: 9, name: "Agriculture Aces", mp: 4, w: 0, d: 1, l: 3, gf: 2, ga: 6, gd: -4, pts: 1 },
             { position: 10, name: "Education Elves", mp: 4, w: 0, d: 1, l: 3, gf: 1, ga: 7, gd: -6, pts: 1 },
           ].map((team) => (
