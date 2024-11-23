@@ -41,12 +41,12 @@ const TeamsPage = () => {
       <div className="">
         <Navbar />
       </div>
-      <h1 className='text-center text-green-500 font-semibold p-3 text-lg'>
+      <h1 className='text-center text-green-500 font-semibold p-2 text-lg'>
         Mak League Standings
       </h1>
 
       <Table className="text-[18px]">
-        <TableCaption>Standings as of November 20</TableCaption>
+        <TableCaption>Standings as of November 23</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Position</TableHead>
